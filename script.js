@@ -100,3 +100,114 @@ function updateClock() {
 setInterval(updateClock, 1000); //updates every second
 
 updateClock(); //updates continually
+
+//Color Change
+const colors = ["#4287f5", "#10b579", "#c372d4", "#eb60bf", "#fbfca9"]
+const cbutton = document.getElementById("colorBtn");
+
+cbutton.addEventListener("click", () =>{
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    document.body.style.backgroundColor = randomColor;
+});
+
+//Number Guessing Game
+const gbutton = document.getElementById("guessBtn");
+const resultText = document.getElementById("result2");
+
+gbutton.addEventListener("click", () => {
+    const userGuess = parseInt(document.getElementById("userGuess").value);
+
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+    if (userGuess === randomNumber) {
+        resultText.textContent = `🎉 You Win! The number was ${randomNumber}.`;
+        resultText.style.color = "green";
+    } else {
+        resultText.textContent = `❌ You lost! The number was ${randomNumber}.`;
+        resultText.style.color = "red";
+    }
+});
+
+//Simple Calculator
+function calculate(operation) {
+    const num1 = parseFloat(document.getElementById("num1").value);
+    const num2 = parseFloat(document.getElementById("num2").value);
+    const output = document.getElementById("output");
+    let result;
+
+    if (isNaN(num1) || isNaN(num2)) {
+        output.textContent = "❌ Please enter valid numbers";
+        return;
+    }
+
+
+    switch (operation) {
+        case "add":
+            result = num1 + num2;
+            break;
+        case "subtract":
+            result = num1 - num2;
+            break;
+        case "multiply":
+            result = num1 * num2;
+            break;
+        case "divide":
+            if (num2 === 0) {
+                output.textContent = "⚠️ Cannot divide by zero";
+                return;
+            }
+        result = num1 / num2;
+        break;
+        default:
+        result = "Unknown operation";
+    }
+    output.textContent = `✅ Result: ${result.toFixed(2)}`;
+}
+
+//Image Slider
+const images = [
+    "https://media.istockphoto.com/id/1446199740/photo/path-through-a-sunlit-forest.jpg?s=612x612&w=is&k=20&c=TZAaOLGepD-filh7II7fkArDPp3ET13M7aoGKgm21G4=",
+    "https://media.istockphoto.com/id/1502686868/photo/aerial-drone-view-of-green-lush-forest.jpg?s=612x612&w=is&k=20&c=NWFsiMXjPTNj4tK0zYPELTxK_vbBg2rO67eLtUnB82s=",
+    "https://media.istockphoto.com/id/1491158797/photo/the-lush-green-trees-rise-up-into-the-air.jpg?s=612x612&w=is&k=20&c=xawKfUVbiO_HvjIMEg74Ss5Lh3oaWTixD2xUOyyQ0tU="
+];
+
+let currentIndex = 0;
+
+const imgElement = document.getElementById("carousel");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+imgElement.src = images[currentIndex];
+
+nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    imgElement.src = images[currentIndex];
+});
+
+prevBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex -1) % images.length;
+    imgElement.src = images [currentIndex];
+});
+
+//Form Validator
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        message.textContent = "❌ Please enter a valid email.";
+        return;
+    }
+
+    if (password.length < 6) {
+        message.textContent = "❌ Password must be at least 6 characters";
+        return;
+    }
+
+    message.textContent = " ✅Login successful!";
+});
